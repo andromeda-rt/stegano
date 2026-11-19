@@ -150,14 +150,8 @@ class ElectroBlueStego(ctk.CTk):
         self.apply_language()
 
     def apply_language(self):
-        # Tabs – CTkTabview has limited rename support; set via internal buttons if possible
-        try:
-            # Update segmented button texts
-            seg = self.tabs._segmented_button
-            seg.configure(values=[f"  {self.t('tab_image')}  ", f"  {self.t('tab_audio')}  "])
-        except Exception:
-            pass
-
+        # Note: do NOT reconfigure tab names via segmented_button.values
+        # — that destroys tab content in CustomTkinter.
         self.lbl_embed_img.configure(text="🔒  " + self.t("embed_img"))
         self.lbl_extract_img.configure(text="🔓  " + self.t("extract_img"))
         self.lbl_embed_aud.configure(text="🎧  " + self.t("embed_aud"))
@@ -240,7 +234,7 @@ class ElectroBlueStego(ctk.CTk):
         )
         self.tabs.pack(fill="both", expand=True, padx=16, pady=6)
 
-        self.tab_img = self.tabs.add("  Imagine  ")
+        self.tab_img = self.tabs.add("  Image / Imagine  ")
         self.tab_audio = self.tabs.add("  Audio  ")
 
         self._build_image_tab()
@@ -914,4 +908,3 @@ class ElectroBlueStego(ctk.CTk):
 if __name__ == "__main__":
     app = ElectroBlueStego()
     app.mainloop()
-    
